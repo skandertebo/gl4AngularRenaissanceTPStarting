@@ -43,6 +43,8 @@ import { ItemComponent } from './cv/item/item.component';
 import { DefaultImagePipe } from './cv/pipes/default-image.pipe';
 import { EmbaucheComponent } from './cv/embauche/embauche.component';
 import { CvCardComponent } from './cv/cv-card/cv-card.component';
+import { RhComponent } from './optimizationPattern/rh/rh.component';
+import { UserListComponent } from './optimizationPattern/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,8 @@ import { CvCardComponent } from './cv/cv-card/cv-card.component';
     LoginComponent,
     TestObservableComponent,
     TestHttpComponent,
+    RhComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

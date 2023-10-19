@@ -61,6 +61,12 @@
           >Color</a
         >
         <a
+          class="nav-link"
+          [routerLink]="['rh']"
+          routerLinkActive="active text-primary"
+          >Rh</a
+        >
+        <a
           *ngIf="!authService.isAuthenticated()"
           class="nav-link"
           [routerLink]="['login']"
