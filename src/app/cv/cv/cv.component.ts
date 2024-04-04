@@ -11,7 +11,7 @@ import { EMPTY, Observable, catchError, of } from "rxjs";
 })
 export class CvComponent {
   cvs: Cv[] = [];
-  nbClickItem = 0;
+  selectedCv: Cv | null = null;
   /*   selectedCv: Cv | null = null; */
   date = new Date();
 
@@ -33,6 +33,8 @@ export class CvComponent {
     });
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
-    this.cvService.selectCv$.subscribe(() => this.nbClickItem++);
+  }
+  onForwardCv(cv: Cv) {
+    this.selectedCv = cv;
   }
 }

@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Cv } from '../model/cv';
 import { EmbaucheService } from '../services/embauche.service';
 import { ToastrService } from 'ngx-toastr';
-import { CvService } from '../services/cv.service';
 
 @Component({
   selector: 'app-cv-card',
@@ -12,14 +11,11 @@ import { CvService } from '../services/cv.service';
 export class CvCardComponent {
   constructor(
     private embaucheService: EmbaucheService,
-    private toastr: ToastrService,
-    private cvService: CvService
+    private toastr: ToastrService
   ) {}
-  cv: Cv | null = null;
+  @Input() cv: Cv | null = null;
 
-  ngOnInit() {
-    this.cvService.selectCv$.subscribe((cv) => (this.cv = cv));
-  }
+  ngOnInit() {}
   embaucher() {
     if (this.cv) {
       if (this.embaucheService.embauche(this.cv)) {
