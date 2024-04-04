@@ -45,6 +45,7 @@ import { EmbaucheComponent } from './cv/embauche/embauche.component';
 import { CvCardComponent } from './cv/cv-card/cv-card.component';
 import { RhComponent } from './optimizationPattern/rh/rh.component';
 import { UserListComponent } from './optimizationPattern/user-list/user-list.component';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { UserListComponent } from './optimizationPattern/user-list/user-list.com
     TestObservableComponent,
     TestHttpComponent,
     RhComponent,
-    UserListComponent
+    UserListComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
