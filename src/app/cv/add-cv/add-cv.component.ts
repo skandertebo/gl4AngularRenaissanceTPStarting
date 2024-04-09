@@ -4,6 +4,7 @@ import { CvService } from '../services/cv.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { APP_ROUTES } from 'src/config/routes.config';
+import { Cv } from '../model/cv';
 
 @Component({
   selector: 'app-add-cv',
@@ -17,12 +18,11 @@ export class AddCvComponent {
     private toaster: ToastrService
   ) {}
 
-  addCv(formumaire: NgForm) {
-    this.cvService.addCv(formumaire.value).subscribe({
+  addCv(cv: Cv) {
+    this.cvService.addCv(cv).subscribe({
       next: () => {
         this.toaster
-          .success(`Le cv de ${formumaire.value.firstname} ${formumaire.value.name}
-     a été ajouté avec succès`);
+          .success(`Le cv a été ajouté avec succès`);
         this.router.navigate([APP_ROUTES.cv]);
       },
       error: (erreur) => {
