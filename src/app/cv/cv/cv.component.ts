@@ -3,7 +3,6 @@ import { Cv } from "../model/cv";
 import { LoggerService } from "../../services/logger.service";
 import { ToastrService } from "ngx-toastr";
 import { CvService } from "../services/cv.service";
-import { EMPTY, Observable, catchError, of } from "rxjs";
 @Component({
   selector: "app-cv",
   templateUrl: "./cv.component.html",
@@ -33,8 +32,6 @@ export class CvComponent {
     });
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
-  }
-  onForwardCv(cv: Cv) {
-    this.selectedCv = cv;
+    this.cvService.selectCv$.subscribe((cv) => (this.selectedCv = cv));
   }
 }
