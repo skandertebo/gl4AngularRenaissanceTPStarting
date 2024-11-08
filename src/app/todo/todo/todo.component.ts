@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { Todo } from '../model/todo';
+import { Todo, TodoStatus } from '../model/todo';
 import { TodoService } from '../service/todo.service';
 
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-todo',
-    templateUrl: './todo.component.html',
-    styleUrls: ['./todo.component.css'],
-    providers: [TodoService],
-    standalone: true,
-    imports: [FormsModule],
+  selector: 'app-todo',
+  templateUrl: './todo.component.html',
+  styleUrls: ['./todo.component.css'],
+  providers: [TodoService],
+  standalone: true,
+  imports: [FormsModule],
 })
 export class TodoComponent {
   private todoService = inject(TodoService);
@@ -23,9 +23,18 @@ export class TodoComponent {
   constructor() {
     this.todos = this.todoService.getTodos();
   }
+
+  getByStatus(status: TodoStatus) {
+    return this.todoService.getByStatus(status);
+  }
+
   addTodo() {
     this.todoService.addTodo(this.todo);
     this.todo = new Todo();
+  }
+
+  changeNextStatus(todo: Todo) {
+    this.todoService.changeNextStatus(todo);
   }
 
   deleteTodo(todo: Todo) {
