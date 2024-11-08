@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { APP_ROUTES } from '../../../config/routes.config';
 import { AuthService } from '../../auth/services/auth.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-details-cv',
@@ -23,25 +24,26 @@ export class DetailsCvComponent implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
-    this.cvService.getCvById(+id).subscribe({
+    this.cvService.getCvById(+id).pipe(catchError(()=>{
+      this.router.navigate([APP_ROUTES.cv]);
+      return of()
+    })).subscribe({
         next: (cv) => {
           this.cv = cv;
         },
-        error: (e) => {
-          this.router.navigate([APP_ROUTES.cv]);
-        },
       });
   }
+  
   deleteCv(cv: Cv) {
-    this.cvService.deleteCvById(cv.id).subscribe({
+    this.cvService.deleteCvById(cv.id).pipe(catchError(()=>{
+      this.toastr.error(
+        `Problème avec le serveur veuillez contacter l'admin`
+      );
+      return of(null)
+    })).subscribe({
       next: () => {
         this.toastr.success(`${cv.name} supprimé avec succès`);
         this.router.navigate([APP_ROUTES.cv]);
-      },
-      error: () => {
-        this.toastr.error(
-          `Problème avec le serveur veuillez contacter l'admin`
-        );
       },
     });
   }
