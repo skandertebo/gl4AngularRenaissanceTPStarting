@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { APP_ROUTES } from '../../../config/routes.config';
 import { AuthService } from '../../auth/services/auth.service';
-import { catchError, of } from 'rxjs';
+import { Observable, of,catchError } from 'rxjs';
 
 @Component({
   selector: 'app-details-cv',
@@ -13,7 +13,8 @@ import { catchError, of } from 'rxjs';
   styleUrls: ['./details-cv.component.css'],
 })
 export class DetailsCvComponent implements OnInit {
-  cv: Cv | null = null;
+  cv$: Observable<Cv | null> = of(null);
+
   constructor(
     private cvService: CvService,
     private router: Router,
