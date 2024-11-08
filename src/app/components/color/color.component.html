@@ -4,6 +4,6 @@
 
 <input appRainbow #inputColor (change)="changeColor(inputColor.value)" type="text" class="form-control">
 
-<button (click)="changeColor(defaultColor)" class="btn btn-warning">
+<button appRainbow (click)="changeColor(defaultColor)" class="btn btn-warning">
   reset
 </button>
