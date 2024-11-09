@@ -1,0 +1,41 @@
+<p>ttccalculator works!</p>
+<div>
+  <h1>TTC Calculator</h1>
+  <div class="input-fields">
+    <div class="input-field">
+      <input
+        type="number"
+        name="ht"
+        placeholder="HT"
+        [value]="price()"
+        (input)="onPriceChange($event)"
+      />
+      <label for="ht">Prix HT</label>
+    </div>
+    <div class="input-field">
+      <input
+        type="number"
+        name="quantite"
+        placeholder="Quantité"
+        [value]="quantity()"
+        (input)="onQuantityChange($event)"
+      />
+      <label for="quantite">Quantité</label>
+    </div>
+    <div class="input-field">
+      <input
+        type="number"
+        name="tva"
+        [value]="tva()"
+        placeholder="TVA"
+        (input)="onTvaChange($event)"
+      />
+      <label for="tva">TVA</label>
+    </div>
+  </div>
+  <div class="calculator">
+    <p>prix unitaire TTC : $ {{ unitPrice() }}</p>
+    <p>prix total TTC : $ {{ totalPrice() }}</p>
+    <p>discount : {{ discount() }}</p>
+  </div>
+</div>
