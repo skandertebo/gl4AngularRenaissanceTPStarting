@@ -5,7 +5,7 @@ import { Cv } from '../model/cv';
   providedIn: 'root',
 })
 export class EmbaucheService {
-  private embauchees = signal<Cv[]>([]);
+  public embauchees = signal<Cv[]>([]);
 
   constructor() {}
 
