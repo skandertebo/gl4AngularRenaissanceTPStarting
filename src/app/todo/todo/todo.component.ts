@@ -15,14 +15,12 @@ import { FormsModule } from '@angular/forms';
 export class TodoComponent {
   private todoService = inject(TodoService);
 
-  todos: Todo[] = [];
+  // todos: Todo[] = [];
   todo = new Todo();
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
-  constructor() {
-    this.todos = this.todoService.getTodos();
-  }
+  constructor() {}
 
   getByStatus(status: TodoStatus) {
     return this.todoService.getByStatus(status);
