@@ -10,23 +10,19 @@ import { catchError, Observable, of } from "rxjs";
   styleUrls: ["./cv.component.css"],
 })
 export class CvComponent {
-  cvs: Cv[] = [];
+  cvs$: Observable<Cv[]> = this.cvService.getCvs();
   date = new Date();
   constructor(
     private logger: LoggerService,
     private toastr: ToastrService,
     private cvService: CvService
   ) {
-    this.cvService.getCvs().pipe(catchError(()=>{
-        this.cvs = this.cvService.getFakeCvs();
+    this.cvs$=this.cvService.getCvs().pipe(catchError(()=>{
         this.toastr.error(`
           Attention!! Les données sont fictives, problème avec le serveur.
           Veuillez contacter l'admin.`);
-          return of(this.cvs);
-    })).subscribe({
-      next: (cvs) => {
-        this.cvs = cvs;
-      }});
+          return of(this.cvService.getFakeCvs());
+    }));
       this.logger.logger("je suis le cvComponent");
       this.toastr.info("Bienvenu dans notre CvTech");
     }
