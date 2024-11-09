@@ -29,8 +29,8 @@ export class EmbaucheService {
    */
   embauche(cv: Cv): boolean {
     const currentEmbauchees = this.embauchees();
-    if (currentEmbauchees.indexOf(cv) === -1) {
-      this.embauchees.set([...currentEmbauchees, cv]); 
+    if (!currentEmbauchees.includes(cv)) {
+      this.embauchees.update((embauchees) => [...embauchees, cv]);
       return true;
     }
     return false;
