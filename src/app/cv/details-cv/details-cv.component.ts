@@ -24,21 +24,23 @@ export class DetailsCvComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = +this.activatedRoute.snapshot.params['id'];
-    this.cv$ = this.cvService.getCvById(id).pipe(
-      catchError(() => {
-        this.router.navigate([APP_ROUTES.cv]);
-        return of(null); 
-      })
-    );
+    const id = this.activatedRoute.snapshot.params['id'];
+    this.cvService.getCvById(+id).pipe(catchError(()=>{
+      this.router.navigate([APP_ROUTES.cv]);
+      return of()
+    })).subscribe({
+        next: (cv) => {
+          this.cv = cv;
+        },
+      });
   }
-
+  
   deleteCv(cv: Cv) {
     this.cvService.deleteCvById(cv.id).pipe(catchError(()=>{
       this.toastr.error(
-          `Problème avec le serveur veuillez contacter l'admin`
-        );
-        return of(null);
+        `Problème avec le serveur veuillez contacter l'admin`
+      );
+      return of(null)
     })).subscribe({
       next: () => {
         this.toastr.success(`${cv.name} supprimé avec succès`);
