@@ -13,6 +13,7 @@ import { CvComponent } from "./cv/cv/cv.component";
 import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
 import { ProductsComponent } from "./products/products.component";
+import { MasterDetailsCvComponent } from "./cv/master-details-cv/master-details-cv.component";
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
@@ -24,6 +25,16 @@ const routes: Route[] = [
   { path: "cv/add", component: AddCvComponent, canActivate: [AuthGuard] },
   { path: "cv/:id", component: DetailsCvComponent },
   { path: "products", component: ProductsComponent },
+  {
+    path: 'master-details',
+    component: MasterDetailsCvComponent,
+    children: [
+      {
+        path: ':id',
+        component: DetailsCvComponent,
+      }
+    ]
+  },
   {
     path: "",
     component: FrontComponent,
@@ -42,6 +53,6 @@ const routes: Route[] = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
