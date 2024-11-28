@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CvService } from '../services/cv.service';
 import { Cv } from '../model/cv';
 import { Router, ActivatedRoute } from '@angular/router';
-import { catchError, Observable, of, switchMap } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { APP_ROUTES } from 'src/config/routes.config';
 
 @Component({
   selector: 'app-master-details-cv',
@@ -31,7 +30,6 @@ export class MasterDetailsCvComponent implements OnInit {
   ngOnInit() {}
 
   goToCvDetails(cv: Cv) {
-    // Use relativeTo to ensure correct child route navigation
     this.router.navigate([cv.id], { relativeTo: this.route });
   }
 }
