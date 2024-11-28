@@ -11,7 +11,6 @@ export class ItemComponent {
   @Input({ required: true }) cv!: Cv;
   @Input() size = 50;
   constructor(private cvService: CvService) {}
-
   onSelectCv() {
     this.cvService.selectCv(this.cv);
   }

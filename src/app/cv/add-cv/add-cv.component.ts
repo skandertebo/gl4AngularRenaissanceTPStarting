@@ -44,9 +44,12 @@ export class AddCvComponent {
     },
   );
 
+
   addCv() {
+    console.log('add cv'); 
     this.cvService.addCv(this.form.value as Cv).subscribe({
       next: (cv) => {
+        console.log('adding cv with id', cv.id);
         this.router.navigate([APP_ROUTES.cv]);
         this.toastr.success(`Le cv ${cv.firstname} ${cv.name}`);
       },

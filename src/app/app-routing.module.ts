@@ -14,16 +14,33 @@ import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
 import { ProductsComponent } from "./products/products.component";
 import { MasterDetailsCvComponent } from "./cv/master-details-cv/master-details-cv.component";
+import { CustomPreloadingStrategy } from "./CustomPreloadingStrategy";
 
 const routes: Route[] = [
+  {
+    path: 'cv',
+    loadChildren: () => import('./cv/cv.module').then(m => m.CvModule), 
+  },
+  {
+    path: "",
+    component: FrontComponent,
+    children: [
+     {
+      path: 'todo',
+      loadChildren: () =>
+        import('./todo/todo.module').then((m) => m.TodoModule),
+      data: { preload: true },
+    },
+  ]
+  },
   { path: "login", component: LoginComponent },
   { path: "rh", component: RhComponent },
-  {
-    path: "cv",
-    component: CvComponent,
-  },
-  { path: "cv/add", component: AddCvComponent, canActivate: [AuthGuard] },
-  { path: "cv/:id", component: DetailsCvComponent },
+  // {
+  //   path: "cv",
+  //   component: CvComponent,
+  // },
+  // { path: "cv/add", component: AddCvComponent, canActivate: [AuthGuard] },
+  // { path: "cv/:id", component: DetailsCvComponent },
   { path: "products", component: ProductsComponent },
   {
     path: 'master-details',
@@ -35,14 +52,14 @@ const routes: Route[] = [
       }
     ]
   },
-  {
-    path: "",
-    component: FrontComponent,
-    children: [
-      { path: "todo", component: TodoComponent },
-      { path: "word", component: MiniWordComponent },
-    ],
-  },
+  // {
+  //   path: "",
+  //   component: FrontComponent,
+  //   children: [
+  //     { path: "todo", component: TodoComponent },
+  //     { path: "word", component: MiniWordComponent },
+  //   ],
+  // },
   {
     path: "admin",
     component: AdminComponent,
@@ -52,7 +69,7 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: CustomPreloadingStrategy })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

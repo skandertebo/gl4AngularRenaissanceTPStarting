@@ -18,10 +18,6 @@ import { CardProfilComponent } from "./components/card-profil/card-profil.compon
 import { PereComponent } from "./components/pere/pere.component";
 import { FilsComponent } from "./components/fils/fils.component";
 
-import { AddCvComponent } from "./cv/add-cv/add-cv.component";
-import { CvComponent } from "./cv/cv/cv.component";
-import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
-
 import { NgstyleComponent } from "./directives/ngstyle/ngstyle.component";
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { NgclassComponent } from "./directives/ngclass/ngclass.component";
@@ -53,6 +49,9 @@ import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component"
 import { SliderComponent } from "./rxjs/slider/slider.component";
 import { RouterModule } from "@angular/router";
 import { MasterDetailsCvComponent } from "./cv/master-details-cv/master-details-cv.component";
+import { CvModule } from "./cv/cv.module";
+import { TodoModule } from "./todo/todo.module";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -61,25 +60,13 @@ import { MasterDetailsCvComponent } from "./cv/master-details-cv/master-details-
     SecondComponent,
     ColorComponent,
     TwoComponent,
-    CardProfilComponent,
     PereComponent,
     FilsComponent,
-    AddCvComponent,
-    CvComponent,
-    ListComponent,
-    ItemComponent,
-    DetailsCvComponent,
-    CvCardComponent,
-    CardProfilComponent,
-    EmbaucheComponent,
-    DefaultImagePipe,
-    AutocompleteComponent,
     NgstyleComponent,
     MiniWordComponent,
     NgclassComponent,
     HighlightDirective,
     Btc2usdPipe,
-    TodoComponent,
     NavbarComponent,
     FrontComponent,
     AdminComponent,
@@ -92,7 +79,6 @@ import { MasterDetailsCvComponent } from "./cv/master-details-cv/master-details-
     RhComponent,
     UserListComponent,
     ProductsComponent,
-    MasterDetailsCvComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -108,7 +94,10 @@ import { MasterDetailsCvComponent } from "./cv/master-details-cv/master-details-
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",
+      
     }),
+    CvModule,
+    TodoModule,
   ],
   providers: [
     AuthInterceptorProvider,
