@@ -20,6 +20,8 @@ const routes: Route[] = [
   {
     path: 'cv',
     loadChildren: () => import('./cv/cv.module').then(m => m.CvModule), 
+    data: { preload: true },
+
   },
   {
     path: "",
@@ -29,7 +31,6 @@ const routes: Route[] = [
       path: 'todo',
       loadChildren: () =>
         import('./todo/todo.module').then((m) => m.TodoModule),
-      data: { preload: true },
     },
   ]
   },
