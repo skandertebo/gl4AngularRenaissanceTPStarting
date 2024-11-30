@@ -23,14 +23,12 @@ export class ProductsComponent {
   });
   
   products$: Observable<Product[]>;
-  private totalProducts = 0;
 
   constructor(private productService: ProductService) {
     this.products$ = this.settingsSubject.pipe(
       concatMap(settings => 
         this.productService.getProducts(settings).pipe(
           map(response => {
-            this.totalProducts = response.total;
             return response.products;
           }),
           takeWhile(products => products.length > 0, true)
