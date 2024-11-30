@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { NF404Component } from './components/nf404/nf404.component';
-import { FrontComponent } from './templates/front/front.component';
-import { AdminComponent } from './templates/admin/admin.component';
 
 const routes: Route[] = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) },
   {
     path: 'rh',
     loadComponent: () => import('./optimizationPattern/rh/rh.component').then(m => m.RhComponent),
@@ -25,7 +21,7 @@ const routes: Route[] = [
   },
   {
     path: '',
-    component: FrontComponent,
+     loadComponent: () => import('./templates/front/front.component').then(m => m.FrontComponent),
     children: [
       { path: 'todo', loadComponent: () => import('./todo/todo/todo.component').then(m => m.TodoComponent) },
       { path: 'word', loadComponent: () => import('./directives/mini-word/mini-word.component').then(m => m.MiniWordComponent) },
@@ -33,12 +29,12 @@ const routes: Route[] = [
   },
   {
     path: 'admin',
-    component: AdminComponent,
+    loadComponent: () => import('./templates/admin/admin.component').then(m => m.AdminComponent),
     children: [
       { path: 'color', loadComponent: () => import('./components/color/color.component').then(m => m.ColorComponent) },
     ],
   },
-  { path: '**', component: NF404Component },
+  { path: '**', loadComponent: () => import('./components/nf404/nf404.component').then(m => m.NF404Component) },
 ];
 
 @NgModule({
