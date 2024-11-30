@@ -44,11 +44,10 @@ export class ProductsComponent {
     const currentSettings = this.settingsSubject.value;
     const nextSkip = currentSettings.skip + currentSettings.limit;
     
-    if (nextSkip < this.totalProducts) {
       this.settingsSubject.next({
         limit: currentSettings.limit,
         skip: nextSkip
       });
-    }
+    
   }
 }
