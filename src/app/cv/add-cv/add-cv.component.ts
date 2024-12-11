@@ -1,38 +1,40 @@
-import { Component } from "@angular/core";
-import {
-  AbstractControl,
-  FormBuilder,
-  Validators,
-} from "@angular/forms";
-import { CvService } from "../services/cv.service";
-import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import { APP_ROUTES } from "src/config/routes.config";
-import { Cv } from "../model/cv";
+import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { CvService } from '../services/cv.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { APP_ROUTES } from 'src/config/routes.config';
+import { Cv } from '../model/cv';
+import { CONSTANTES } from 'src/config/const.config';
+import { cinAsyncValidator } from '../validators/cinValidator';
+import { addFormCustomValidator } from '../validators/addFormCustomValidator';
 
 @Component({
-  selector: "app-add-cv",
-  templateUrl: "./add-cv.component.html",
-  styleUrls: ["./add-cv.component.css"],
+  selector: 'app-add-cv',
+  templateUrl: './add-cv.component.html',
+  styleUrls: ['./add-cv.component.css'],
 })
 export class AddCvComponent {
   constructor(
     private cvService: CvService,
     private router: Router,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cinValidator: cinAsyncValidator
   ) {}
 
   form = this.formBuilder.group(
     {
-      name: ["", Validators.required],
-      firstname: ["", Validators.required],
-      path: [""],
-      job: ["", Validators.required],
+      name: ['', Validators.required],
+      firstname: ['', Validators.required],
+      path: [{ value: '', disabled: true }],
+      job: ['', Validators.required],
       cin: [
-        "",
+        '',
         {
-          validators: [Validators.required, Validators.pattern("[0-9]{8}")],
+          validators: [Validators.required, Validators.pattern('[0-9]{8}')],
+          asyncValidators: [this.cinValidator.validate.bind(this.cinValidator)],
+          updateOn: 'blur',
         },
       ],
       age: [
@@ -42,11 +44,32 @@ export class AddCvComponent {
         },
       ],
     },
+    { validators: addFormCustomValidator }
   );
 
+  ngOnInit() {
+    this.form.get('age')?.valueChanges.subscribe((age) => {
+      const path = this.form.get('path')!;
+      if (age && age < 18) {
+        path.reset();
+        path.disable();
+      } else {
+        path.enable();
+      }
+    });
+
+    const savedData = localStorage.getItem(CONSTANTES.ADD_CV_DATA_KEY);
+    if (savedData) {
+      this.form.patchValue(JSON.parse(savedData));
+    }
+
+    this.form.valueChanges.subscribe((data) => {
+      localStorage.setItem(CONSTANTES.ADD_CV_DATA_KEY, JSON.stringify(data));
+    });
+  }
 
   addCv() {
-    console.log('add cv'); 
+    console.log('add cv');
     this.cvService.addCv(this.form.value as Cv).subscribe({
       next: (cv) => {
         console.log('adding cv with id', cv.id);
@@ -62,21 +85,21 @@ export class AddCvComponent {
   }
 
   get name(): AbstractControl {
-    return this.form.get("name")!;
+    return this.form.get('name')!;
   }
   get firstname() {
-    return this.form.get("firstname");
+    return this.form.get('firstname');
   }
   get age(): AbstractControl {
-    return this.form.get("age")!;
+    return this.form.get('age')!;
   }
   get job() {
-    return this.form.get("job");
+    return this.form.get('job');
   }
   get path() {
-    return this.form.get("path");
+    return this.form.get('path');
   }
   get cin(): AbstractControl {
-    return this.form.get("cin")!;
+    return this.form.get('cin')!;
   }
 }

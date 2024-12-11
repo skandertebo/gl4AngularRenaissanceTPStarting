@@ -9,22 +9,69 @@
     Ce champ est obligatoire
   </div>
   Firstname:
-  <input type="text" class="form-control" formControlName="firstname" /> Age:
-  <input type="text" class="form-control" formControlName="age" /> Cin:
-  <input type="text" class="form-control" formControlName="cin" />
+  <input type="text" class="form-control" formControlName="firstname" />
   <div
-    *ngIf="
-      form.errors && form.errors['cinFirstCars'] && cin?.touched && age?.touched
-    "
+    *ngIf="form.get('firstname')?.errors && form.get('firstname')?.touched"
     class="alert alert-danger"
   >
-    Cette Cin est invalide
+    Ce champ est obligatoire
   </div>
-  Job: <input type="text" class="form-control" formControlName="job" /> Path:
+  Age: <input type="text" class="form-control" formControlName="age" />
+  <div
+    *ngIf="form.get('age')?.errors && form.get('age')?.touched"
+    class="alert alert-danger"
+  >
+    Ce champ est obligatoire
+  </div>
+
+  Cin:
+  <input type="text" class="form-control" formControlName="cin" />
+  <div *ngIf="form.get('cin')?.errors && form.get('cin')?.touched">
+    <div
+      *ngIf="form.get('cin')?.errors?.['required']"
+      class="alert alert-danger"
+    >
+      CIN is required
+    </div>
+    <div
+      *ngIf="form.get('cin')?.errors?.['cinTaken']"
+      class="alert alert-danger"
+    >
+      CIN is already taken
+    </div>
+    <div
+      *ngIf="form.get('cin')?.errors?.['pattern']"
+      class="alert alert-danger"
+    >
+      CIN format is invalid
+    </div>
+  </div>
+
+  Job: <input type="text" class="form-control" formControlName="job" />
+  <div
+    *ngIf="form.get('job')?.errors && form.get('job')?.touched"
+    class="alert alert-danger"
+  >
+    Ce champ est obligatoire
+  </div>
+
+  Path:
   <input type="text" class="form-control" formControlName="path" />
+  <div
+    *ngIf="form.get('path')?.errors && form.get('path')?.touched"
+    class="alert alert-danger"
+  >
+    Ce champ est obligatoire
+  </div>
 
   <button [disabled]="form.invalid" class="btn btn-primary" (click)="addCv()">
     add cv
   </button>
+
+  <div
+    *ngIf="form.hasError('ageCinProblem') && (form.touched || form.dirty)"
+    class="cross-validation-error-message alert alert-danger"
+  >
+    Age and CIN do not match
+  </div>
 </form>
-{{ form.errors | json }}
